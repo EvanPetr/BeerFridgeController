@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <link rel="stylesheet" href='/static/styles.css' />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <h1>Ψυγείο Μπύρας</h1>
+        <p>Θερμοκρασία: <span id="temperature"></span>&#8451</p>
+        <p>Επιθυμητή θερμοκρασία: <span id="desired_temperature"></span>&#8451</p>
+
+         <script>
+              $(document).ready(function() {
+                $('#desired_temperature').load('/get_desired_temperature')
+                setInterval(function(){
+                    $('#temperature').load('/get_temperature')
+                }, 1000);
+              });
+         </script>
+        <script>
+            function set_desired_temperature() {
+                let desired_temperature_value = document.getElementById("quantity").value;
+                if(desired_temperature_value >= -5 && desired_temperature_value <= 30){
+                    $('#desired_temperature').load(`/set_desired_temperature/${desired_temperature_value}`)
+                }
+            }
+        </script>
+        <label for="quantity">Αλλαγή επιθυμητής θερμοκρασίας (-5 &#8451 μέχρι 25 &#8451):</label>
+        <input type="number" id="quantity" name="quantity" min="-5" max="25" step="0.2">
+        <button onclick="set_desired_temperature()">Αποθηκευση</button>
+    </body>
+</html>
